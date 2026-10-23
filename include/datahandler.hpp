@@ -33,8 +33,14 @@ class data_handler
     void read_feature_vector(string path);
      void read_feature_labels(string path);
      void split_data();
-     void coun_classes();
-     
+     void count_classes();
+
+     uint32_t convert_to_little_endian(const unsigned char* bytes);
+
+    vector<Data *> * get_training_data();
+    vector<Data *> * get_test_data();
+    vector<Data *> * get_validation_data();
+
 };
 
 
