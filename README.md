@@ -1,13 +1,15 @@
 # Machine Learning in C++
 
-A lightweight machine-learning project written in C++. The repository is currently in an early development stage and is intended to grow into a collection of machine-learning algorithms and data utilities.
+A lightweight C++ project focused on learning the basics of machine-learning data handling and model preparation.
 
 ## Current Contents
 
-- `include/data.hpp` defines the `Data` class for storing a feature vector, label, and enum label.
-- `include/datahandler.hpp` declares the `data_handler` class for loading data and splitting it into training, testing, and validation sets.
-- `src/data.cpp` contains the implementation for the `Data` methods.
-- `Makefile` provides a basic build target for compiling C++ source files in `src/`.
+- `include/data.hpp` defines the `Data` class for storing a feature vector, label, and enumerated label.
+- `include/datahandler.hpp` declares the `data_handler` class for loading dataset files and preparing training/test/validation subsets.
+- `src/data.cpp` implements the `Data` methods.
+- `src/data_handler.cpp` contains the dataset handler logic and file parsing routines.
+- `src/main.cpp` provides the program entry point.
+- `Makefile` builds all `.cpp` files in `src/` into an executable under `build/`.
 
 ## Project Structure
 
@@ -19,22 +21,28 @@ A lightweight machine-learning project written in C++. The repository is current
 │   ├── data.hpp
 │   └── datahandler.hpp
 ├── src/
-│   └── data.cpp
-└── build/
-    └── generated during compilation
+│   ├── data.cpp
+│   ├── data_handler.cpp
+│   └── main.cpp
+├── build/
+│   └── generated during compilation
+└── .gitignore
 ```
 
 ## Build and Run
 
-From the project root, run:
+From the project root, compile the project with:
 
 ```bash
-make
-make run
+g++ -std=c++17 -Wall -Wextra -Iinclude src/*.cpp -o build/ml_app
 ```
 
-This will build any `.cpp` files found in `src/` into a program under `build/`.
+Then run it with:
 
-## Development Status
+```bash
+./build/ml_app
+```
 
-The project is still in its early scaffolding phase. The core data representation is being implemented, and the next steps include completing the dataset handler, adding an application entry point, and expanding the machine-learning functionality.
+## Notes
+
+This project is still in the early scaffolding phase. The current focus is on correctly representing data, reading dataset headers, and creating the basic structure needed for future ML algorithms.
