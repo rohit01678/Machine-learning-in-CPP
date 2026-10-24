@@ -1,4 +1,13 @@
 #include<data.hpp>
+using namespace std;
+
+Data::Data(){
+    feature_vector = new vector<uint8_t>;
+}
+
+Data::~Data(){
+    delete feature_vector;
+}
 
 void Data::set_feature_vector(vector<uint8_t> *vect){
     feature_vector= vect;
@@ -19,7 +28,7 @@ int Data::get_feature_vector_size(){
 uint8_t Data::get_label(){
     return label;
 }
-uint8_t Data::get_enumerated_label(){
+int Data::get_enumerated_label(){
     return enum_label;
 }
 
