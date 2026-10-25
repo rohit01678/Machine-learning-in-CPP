@@ -26,11 +26,23 @@ void data_handler::read_feature_vector(string path) {
 
         const uint32_t image_size = header[2] * header[3];
         (void)image_size;
-
         for (uint32_t i = 0; i < header[1]; ++i) {
             Data *d = new Data();
+            uint8_t element[1];
+            for (int j = 0; j < image_size; ++j) {
+                if (fread(element, sizeof(element), 1, f)) {
+                    d->append_to_feature_vector(element[0]);
+                } else {
+                    printf("Error Reading from file.\n");
+                    exit(1);
+                }
+            }
             data_array.push_back(d);
         }
+        printf("Successfully read and stored %lu feature vectors.\n", data_array.size());
+    }else{
+        printf("Could not find the file.\n");
+        exit(1);
     }
 }
 
