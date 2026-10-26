@@ -42,21 +42,21 @@ This project currently focuses on:
 
 From the project root, compile with:
 
-```bash
-g++ -std=c++17 -Wall -Wextra -Iinclude src/*.cpp -o build/ml_app
+```powershell
+cd "C:\Users\91706\OneDrive\Desktop\Project 1\Machine-learning-in-CPP"
+g++ -std=c++17 -I"include" src\data.cpp src\data_handler.cpp -o app.exe
 ```
 
 ## Run
 
-```bash
-./build/ml_app
+```powershell
+.\app.exe ".\train-images.idx3-ubyte" ".\train-labels.idx1-ubyte"
 ```
 
-On Windows PowerShell, the equivalent command is:
+The exact command used for this project is:
 
 ```powershell
-g++ -std=c++17 -Wall -Wextra -Iinclude src/*.cpp -o build/ml_app
-./build/ml_app
+cd "C:\Users\91706\OneDrive\Desktop\Project 1\Machine-learning-in-CPP"; g++ -std=c++17 -I"include" src\data.cpp src\data_handler.cpp -o app.exe
 ```
 
 ## Notes
