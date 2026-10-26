@@ -1,0 +1,34 @@
+{
+  "configurations": [
+    {
+      "name": "GCC-MSYS2",
+      "includePath": [
+        "${workspaceFolder}/include",
+        "${workspaceFolder}/src",
+        "C:/msys64/ucrt64/include",
+        "C:/msys64/ucrt64/include/c++/16.2.0",
+        "C:/msys64/ucrt64/include/c++/16.2.0/x86_64-w64-mingw32",
+        "C:/msys64/ucrt64/include/c++/16.2.0/backward"
+      ],
+      "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "windows-gcc-x64",
+      "compilerArgs": [
+        "-std=c++17"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
+      "browse": {
+        "path": [
+          "${workspaceFolder}"
+        ],
+        "limitSymbolsToIncludedHeaders": true
+      }
+    }
+  ],
+  "version": 4
+}
