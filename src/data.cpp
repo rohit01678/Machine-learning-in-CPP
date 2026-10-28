@@ -1,4 +1,4 @@
-#include<data.hpp>
+#include <data.hpp>
 using namespace std;
 
 Data::Data(){
