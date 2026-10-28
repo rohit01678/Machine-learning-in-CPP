@@ -15,7 +15,8 @@
       "cppStandard": "c++17",
       "intelliSenseMode": "windows-gcc-x64",
       "compilerArgs": [
-        "-std=c++17"
+        "-std=c++17",
+        "-I${workspaceFolder}/include"
       ],
       "defines": [
         "_DEBUG",
