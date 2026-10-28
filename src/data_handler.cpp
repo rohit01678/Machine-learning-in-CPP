@@ -1,4 +1,4 @@
-#include<datahandler.hpp>
+#include "datahandler.hpp"
 using namespace std;
 
 data_handler::data_handler() {
@@ -15,7 +15,7 @@ data_handler::~data_handler() {
 void data_handler::read_feature_vector(string path) {
     uint32_t header[4]; //|Magic|NUM images|Rowsize|Colsize
     unsigned char bytes[4];
-    FILE *f = fopen(path.c_str(), "r");
+    FILE *f = fopen(path.c_str(), "rb");
     if (f) {
         for (int i = 0; i < 4; i++) {
             if (fread(bytes, sizeof(bytes), 1, f)) {
@@ -39,6 +39,7 @@ void data_handler::read_feature_vector(string path) {
             data_array.push_back(d);
         }
         printf("Successfully read and stored %zu feature vectors.\n", data_array.size());
+        fclose(f);
     }else{
         printf("Could not find the file.\n");
         exit(1);
@@ -46,9 +47,9 @@ void data_handler::read_feature_vector(string path) {
 }
 
 void data_handler::read_feature_labels(string path) {
-    uint32_t header[2]; //|Magic|NUM images|Rowsize|Colsize
-    unsigned char bytes[2];
-    FILE *f = fopen(path.c_str(), "r");
+    uint32_t header[2]; //|Magic|NUM images
+    unsigned char bytes[4];
+    FILE *f = fopen(path.c_str(), "rb");
     if (f) {
         for (int i = 0; i < 2; ++i) {
             if (fread(bytes, sizeof(bytes), 1, f)) {
@@ -72,6 +73,7 @@ void data_handler::read_feature_labels(string path) {
             }
         }
         printf("Successfully read and stored %zu labels.\n", data_array.size());
+        fclose(f);
     } else {
         printf("Could not find the file.\n");
         exit(1);
@@ -116,9 +118,9 @@ void data_handler::split_data() {
             count++;
         }
     }
-    printf("Training Data Size: %lu.\n",training_data.size());
-    printf("Test Data Size: %lu.\n",test_data.size());
-printf("Validation Data Size: %lu.\n",validation_data.size());
+    printf("Training Data Size: %zu.\n", training_data.size());
+    printf("Test Data Size: %zu.\n", test_data.size());
+    printf("Validation Data Size: %zu.\n", validation_data.size());
 }
 
 
@@ -126,10 +128,10 @@ void data_handler::count_classes() {
 }
 
 uint32_t data_handler::convert_to_little_endian(const unsigned char* bytes) {
-    return static_cast<uint32_t>(bytes[0]) |
-           (static_cast<uint32_t>(bytes[1]) << 8) |
-           (static_cast<uint32_t>(bytes[2]) << 16) |
-           (static_cast<uint32_t>(bytes[3]) << 24);
+    return (static_cast<uint32_t>(bytes[0]) << 24) |
+           (static_cast<uint32_t>(bytes[1]) << 16) |
+           (static_cast<uint32_t>(bytes[2]) << 8) |
+           static_cast<uint32_t>(bytes[3]);
 }
 
 vector<Data *> * data_handler::get_training_data() {
