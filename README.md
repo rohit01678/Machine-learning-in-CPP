@@ -4,16 +4,15 @@ A small C++ project for loading MNIST-style IDX binary data and preparing a trai
 
 ## Overview
 
-The project currently provides:
+This project provides the foundations of an MNIST classifier in C++:
 
-- a `Data` class that stores a sample's feature vector and label
-- IDX feature-vector and label-file loading
-- class and dataset header parsing
-- random train/test/validation data splitting
-- a standalone C++ string-tokenization example
-- a KNN class declaration prepared for future implementation
+- a `Data` class for storing pixel features and labels
+- IDX binary-file reading for images and labels
+- conversion of big-endian IDX headers to integer values
+- random, non-overlapping train/test/validation splits
+- an extensible `Knn` class declaration for future classification work
 
-This is still a data-loading and preprocessing project. The KNN implementation is currently empty.
+The executable currently loads the dataset and creates the splits. KNN prediction and accuracy evaluation are not implemented yet.
 
 ## Dataset Format
 
@@ -39,12 +38,15 @@ Pass custom file paths as command-line arguments when running the program.
 │   ├── data.cpp
 │   ├── data_handler.cpp
 │   └── main.cpp
-├── Tokenization in C++/
-│   └── Token.cpp
 ├── KNN/
-│   ├── include/knn.hpp
-│   └── src/knn.cpp
-└── train, test, and MNIST-style IDX data files
+│   ├── include/
+│   │   └── knn.hpp
+│   └── src/
+│       └── knn.cpp
+├── train-images.idx3-ubyte
+├── train-labels.idx1-ubyte
+├── t10k-images.idx3-ubyte
+└── t10k-labels.idx1-ubyte
 ```
 
 ## Set Up Your Own System
@@ -136,12 +138,6 @@ g++ -std=c++17 -Wall -Wextra -Iinclude src\main.cpp src\data.cpp src\data_handle
 
 The VS Code build task writes the executable to `app.exe` using these sources and the `include` directory.
 
-To compile the standalone tokenization example with warnings enabled:
-
-```powershell
-g++ -std=c++17 -Wall -Wextra -pedantic "Tokenization in C++\Token.cpp" -o "Tokenization in C++\Token.exe"
-```
-
 ### Linux or macOS
 
 ```bash
@@ -175,20 +171,6 @@ Or provide custom feature and label paths:
 ```
 
 The program prints the number of loaded feature vectors and labels, then reports the generated data split sizes.
-To run the standalone tokenization example:
-
-```powershell
-& ".\Tokenization in C++\Token.exe"
-```
-
-Expected output:
-
-```text
-Introduction
-to
-C++
-Programming
-```
 ## Data Split
 
 `data_handler::split_data()` creates an approximately random split using these percentages:
@@ -243,7 +225,7 @@ Verify that the build command completed successfully and that `app.exe` or `app`
 
 Run `make` first, then start `build/ml_app` on Linux or macOS. Windows Make users may use the command-line executable or configure the Makefile for their shell before using `make run`.
 
-## Implementing KNN Yourself
+## Implementing KNN
 
 The next implementation step is to connect the `Knn` class in `KNN/include/knn.hpp` to the split data.
 
@@ -262,7 +244,7 @@ A basic accuracy calculation is:
 correct_predictions * 100.0 / test_data->size()
 ```
 
-Before implementing, fix the current data lifecycle and use seeded random generation if reproducible splits are needed. The `Data` destructor should free each feature-vector pointer, and the data handler should free or correctly own all created `Data` objects.
+Before implementing, fix the current data lifecycle and use seeded random generation if reproducible splits are needed. Each split vector contains pointers to objects owned by `data_array`; the handler destructor must not delete the same objects twice.
 
 ## Current Limitations
 
