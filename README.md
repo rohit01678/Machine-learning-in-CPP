@@ -10,6 +10,7 @@ The project currently provides:
 - IDX feature-vector and label-file loading
 - class and dataset header parsing
 - random train/test/validation data splitting
+- a standalone C++ string-tokenization example
 - a KNN class declaration prepared for future implementation
 
 This is still a data-loading and preprocessing project. The KNN implementation is currently empty.
@@ -38,6 +39,8 @@ Pass custom file paths as command-line arguments when running the program.
 │   ├── data.cpp
 │   ├── data_handler.cpp
 │   └── main.cpp
+├── Tokenization in C++/
+│   └── Token.cpp
 ├── KNN/
 │   ├── include/knn.hpp
 │   └── src/knn.cpp
@@ -133,6 +136,12 @@ g++ -std=c++17 -Wall -Wextra -Iinclude src\main.cpp src\data.cpp src\data_handle
 
 The VS Code build task writes the executable to `app.exe` using these sources and the `include` directory.
 
+To compile the standalone tokenization example with warnings enabled:
+
+```powershell
+g++ -std=c++17 -Wall -Wextra -pedantic "Tokenization in C++\Token.cpp" -o "Tokenization in C++\Token.exe"
+```
+
 ### Linux or macOS
 
 ```bash
@@ -166,7 +175,20 @@ Or provide custom feature and label paths:
 ```
 
 The program prints the number of loaded feature vectors and labels, then reports the generated data split sizes.
+To run the standalone tokenization example:
 
+```powershell
+& ".\Tokenization in C++\Token.exe"
+```
+
+Expected output:
+
+```text
+Introduction
+to
+C++
+Programming
+```
 ## Data Split
 
 `data_handler::split_data()` creates an approximately random split using these percentages:
